@@ -1,8 +1,6 @@
 from django.contrib import admin
-from models import WorkTime,DateAndStaff,StaffShift,DateAndGuest,GuestPlan
+from models import WorkTime,StaffSchedule,GuestSchedule
 
 admin.site.register(WorkTime)
-admin.site.register(DateAndStaff)
-admin.site.register(StaffShift)
-admin.site.register(DateAndGuest)
-admin.site.register(GuestPlan)
+admin.site.register(StaffSchedule)
+admin.site.register(GuestSchedule)
