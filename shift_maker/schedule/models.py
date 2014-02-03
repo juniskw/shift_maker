@@ -1,35 +1,51 @@
 from django.db import models
 
-class Schedule(models.Model):
-	day = models.DateField()	# default?
+#### Base ####
+class Date(models.Model):
 
-#	staff = models.ManyToManyField('staff.models.Staff')
-#	coming_guest = models.ManyToManyField('guest.models.ComingGuest')
+	date = models.DateField()
 
-#	shift_requests = models.ManyToManyField('ShiftRequest',blank=True)
+	class Meta:
+		abstract = True	# This class is not make table
 
-	def __unicode__(self):
-		return self.day.strftime('%Y/%m/%d,%a')
+class TimeTable(models.Model):
+	start = models.TimeField(default='00:00')	# blank=True is?	# blank is Stayng or NightWork?
+	end = models.TimeField(default='00:00')	# blank=True is?	# blank is Staying or NightWork?
 
-class Event(models.Model):
-	event_title = models.CharField(max_length=50)
+	class Meta:
+		abstract = True	# This class is not make table
 
-	date = models.ForeignKey(Schedule)
-
-	start_time = models.TimeField(blank=True)	# default?
-	end_time = models.TimeField(blank=True)	# default?
-
-	from staff.models import Staff
-	staff = models.ManyToManyField(Staff,blank=True)
-	from guest.models import Guest
-	guest = models.ManyToManyField(Guest,blank=True)
+#### Main ####
+###### Staff ######
+class WorkTime(TimeTable):
+	title = models.CharField(max_length=50)
 
 	def __unicode__(self):
-		return event_title
+		return self.title
 
-#class ShiftRequest(models.Model):
-#	staff = models.ForeignKey('staff.models.Staff')
-#	request = models.ManyToManyField('staff.models.WorkTime',blank=True,default="Off")
+class DateAndStaff(Date):
+	staff = models.ForeignKey('staff.Staff')
 
-#	def __unicode__(self):
-#		return "%s => %s" % (staff,request,)
+	def __unicode__(self):
+		return "[%s] %s " % (self.staff,self.date.strftime('%Y/%m/%d,%a'),)
+
+class StaffShift(models.Model):
+	date_and_staff = models.OneToOneField( DateAndStaff )
+
+	shift = models.ForeignKey(WorkTime)
+
+	def __unicode__(self):
+		return "%s => %s" % ( self.date_and_staff,self.shift )
+
+###### Guest ######
+class DateAndGuest(Date):
+	guest = models.ForeignKey('guest.Guest')
+
+	def __unicode__(self):
+		return "[%s] %s " % (self.guest,self.date.strftime('%Y/%m/%d,%a'),)
+
+class GuestPlan(TimeTable):
+	date_and_guest = models.OneToOneField( DateAndGuest )
+
+	def __unicode__(self):
+		return "%s < %s > ~ < %s >" % ( self.date_and_guest,self.start,self.end )
