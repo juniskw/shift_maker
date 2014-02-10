@@ -13,4 +13,4 @@ class GuestSchedule(Date,TimeTable):
 	guest = models.ForeignKey(Guest,unique_for_date='date')
 
 	def __unicode__(self):
-		return "[%s] %s (%s)" % ( self.guest,self.strfdate(),self.unicode_timetable(), )
+		return self.strfdate()

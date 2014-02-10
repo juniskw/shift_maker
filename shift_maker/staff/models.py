@@ -6,7 +6,7 @@ class WorkTime(TimeTable):
 	title = models.CharField(max_length=50,unique=True)
 
 	def __unicode__(self):
-		return "%s (%s)" % ( self.title,self.unicode_timetable(), )
+		return self.title
 
 
 class Staff(models.Model):
@@ -22,8 +22,7 @@ class StaffSchedule(Date):
 	shift = models.ForeignKey(WorkTime)
 
 	def __unicode__(self):
-		return "[%s] %s => %s" % ( self.staff,self.strfdate(),self.shift, )
-
+		return self.strfdate()
 
 class NgShift(Date):
 	staff = models.ForeignKey(Staff,unique_for_date='date')
@@ -32,12 +31,13 @@ class NgShift(Date):
 
 	def unicode_values(self):
 		values = self.ng_shift.values_list('title')
-		result = ""
+
+	  	result = ""
 
 		for value in values:
-				  result += str(value[0]) + ","
+				  result += str(value) + ","
 
 		return result
 
 	def __unicode__(self):
-		return "[%s] NG => %s" % ( self.staff,self.unicode_values() )
+		return self.staff

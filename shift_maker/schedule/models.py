@@ -16,7 +16,7 @@ class TimeTable(models.Model):
 	start = models.TimeField(default='00:00')
 	end = models.TimeField(default='00:00')
 
-	def unicode_timetable(self):
+	def strftimetable(self):
 		timef = '%H:%M'
 		start,end = self.start,self.end
 		return "%s ~ %s" % ( start.strftime(timef),end.strftime(timef) )
