@@ -15,7 +15,7 @@ class StaffAdmin(admin.ModelAdmin):
 		ngs = ""
 
 		for ng in obj.ngshift_set.all():
-			ngs += "%s(%s) ," % ( ng.date,ng.unicode_values(), )
+			ngs += "%s(%s) ," % ( ng.date,ng.ng_values(), )
 
 		return ngs
 
@@ -29,14 +29,14 @@ class StaffScheduleAdmin(DateAdmin):
 
 	list_filter = ['date','staff',]
 
-admin.site.register(StaffSchedule,StaffScheduleAdmin)
+admin.site.register(StaffSchedule,StaffScheduleAdmin)#,StaffScheduleAdmin)
 
 
 class NgShiftAdmin(DateAdmin):
 	list_display = ('staff','schedule_date','get_values')	# schedule_date from schedule/admin
 
 	def get_values(self,obj):
-		return obj.unicode_values()
+		return obj.ng_values()
 
 	get_values.short_description = 'NgShift'
 

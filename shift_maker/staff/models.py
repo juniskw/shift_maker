@@ -29,15 +29,12 @@ class NgShift(Date):
 
 	ng_shift = models.ManyToManyField(WorkTime)
 
-	def unicode_values(self):
+	
+	def ng_values(self):
 		values = self.ng_shift.values_list('title')
-
-	  	result = ""
-
-		for value in values:
-				  result += str(value) + ","
-
-		return result
+		
+		return ",".join( reduce( lambda x,y:x + y ,values ) )
+	
 
 	def __unicode__(self):
-		return self.staff
+		return self.staff.name
