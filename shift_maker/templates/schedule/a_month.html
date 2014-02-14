@@ -1,10 +1,29 @@
 {% extends "schedule/base.html" %}
 
-{% block title %} {{ month }} {% endblock %}
+{% block title %} {{ year }}-{{ month }} {% endblock %}
 
 {% block main %}
-<h1>{{ month }}</h1>
-<table class="table">
+
+<h1>{{ year }}-{{ month }}</h1>
+
+<ul class="pager">
+	<li class="previous">
+		{% ifnotequal month '1' %}
+		<a href="/{{ year }}-{{ month|add:'-1' }}">Previous</a>
+		{% else %}
+		<a href="/{{ year|add:'-1' }}-12">Previous</a>
+		{% endifnotequal %}
+	</li>
+	<li class="next">
+		{% ifnotequal month '12' %}
+		<a href="/{{ year }}-{{ month|add:"1" }}">Next</a>
+		{% else %}
+		<a href="/{{ year|add:'1' }}-1">Next</a>
+		{% endifnotequal %}
+	</li>
+</ul>
+
+<table class="table table-bordered table-hover"><tbody>
 
 	<tr class="info">
 		<th>Sunday</th>
@@ -19,14 +38,15 @@
 	{% for week in month_cal %}
 	<tr>
 		{% for day in week %}
-			<td>
+			<td class="table-hover">
 			{% ifnotequal day 0 %}
-				{{ day }}
+				<strong>{{ day }}</strong>
+				<br/>
 			{% endifnotequal %}
 			</td>
 		{% endfor %}
 	</tr>
 	{% endfor %}
 
-</table>
+</tbody></table>
 {% endblock main %}

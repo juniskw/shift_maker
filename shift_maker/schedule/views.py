@@ -18,6 +18,7 @@ def a_month(req,year_num,month_num):
 	month_cal = Calendar().monthdayscalendar( int(year_num),int(month_num) )
 
 	cntxt = {
+		'year':year_num,
 		'month':month_num,
 		'month_cal':month_cal,
 	}
