@@ -1,0 +1,32 @@
+{% extends "schedule/base.html" %}
+
+{% block title %} {{ month }} {% endblock %}
+
+{% block main %}
+<h1>{{ month }}</h1>
+<table class="table">
+
+	<tr class="info">
+		<th>Sunday</th>
+		<th>Monday</th>
+		<th>Tuesday</th>
+		<th>Wednesday</th>
+		<th>Thursday</th>
+		<th>Friday</th>
+		<th>Saturday</th>
+	</tr>
+
+	{% for week in month_cal %}
+	<tr>
+		{% for day in week %}
+			<td>
+			{% ifnotequal day 0 %}
+				{{ day }}
+			{% endifnotequal %}
+			</td>
+		{% endfor %}
+	</tr>
+	{% endfor %}
+
+</table>
+{% endblock main %}

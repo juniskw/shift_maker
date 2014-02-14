@@ -41,6 +41,9 @@ ROOT_URLCONF = 'shift_maker.urls'
 
 WSGI_APPLICATION = 'shift_maker.wsgi.application'
 
+TEMPLATE_DIRS = (
+	os.path.join(BASE_DIR,'templates'),
+)
 
 # Database
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
