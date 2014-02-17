@@ -1,10 +1,20 @@
-{% extends "schedule/base.html" %}
+{% extends "bases/base.html" %}
 
 {% block title %} {{ year }}-{{ month }} {% endblock %}
 
 {% block main %}
+<ul class="nav nav-tabs">	<!--ヘッダー-->
 
-<h1>{{ year }}-{{ month }}</h1>
+	<li class="disabled">
+		<a href="#">Calendar</a>
+	</li>
+	<li>	<!--シフト表へのリンク-->
+		<a href="/{{ year }}-{{ month }}/shift">Shift</a>
+	</li>
+
+</ul>
+	
+<h1><small>{{ year }}-</small>{{ month }}</h1>	<!--何年の何月？-->
 
 <ul class="pager">
 	<li class="previous">

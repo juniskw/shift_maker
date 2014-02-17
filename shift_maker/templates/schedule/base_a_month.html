@@ -1,0 +1,41 @@
+{% extends 'bases/base.html' %}
+
+{% block title %} {{ year }}-{{ month }} {% endblock %}
+
+{% block main %}
+
+<ul class="nav nav-tabs">	<!--ヘッダー-->
+	<li class="{% block c_nav_class %}{% endblock %}">	<!--disabled-->
+		<a href="/{{ year }}-{{ month }}">Calendar</a>
+	</li>
+	<li class="{% block s_nav_class %}{% endblock %}">	<!--シフト表へのリンク-->
+		<a href="/{{ year }}-{{ month }}/shift">Shift</a>
+	</li>
+</ul>
+
+<ul class="pager">
+	<li class="previous">
+		{% ifnotequal month '1' %}
+		<a href="/{{ year }}-{{ month|add:'-1' }}/{{ url_plus }}">Previous</a>
+		{% else %}
+		<a href="/{{ year|add:'-1' }}-12/{{ url_plus }}">Previous</a>
+		{% endifnotequal %}
+	</li>
+	<li class="next">
+		{% ifnotequal month '12' %}
+		<a href="/{{ year }}-{{ month|add:"1" }}/{{ url_plus }}">Next</a>
+		{% else %}
+		<a href="/{{ year|add:'1' }}-1/{{ url_plus }}">Next</a>
+		{% endifnotequal %}
+	</li>
+</ul>
+
+<h1><small>{{ year }}-</small>{{ month }}</h1>	<!--何年の何月？-->
+
+<table class="table table-bordered {% block t_class %}{% endblock %}">
+
+	{% block t_main %}
+	{% endblock %}
+
+</table>
+{% endblock main %}
