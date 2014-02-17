@@ -16,16 +16,16 @@
 <ul class="pager">
 	<li class="previous">
 		{% ifnotequal month '1' %}
-		<a href="/{{ year }}-{{ month|add:'-1' }}/{{ url_plus }}">Previous</a>
+		<a href="/{{ year }}-{{ month|add:'-1' }}/{{ url_plus }}">前月</a>
 		{% else %}
-		<a href="/{{ year|add:'-1' }}-12/{{ url_plus }}">Previous</a>
+		<a href="/{{ year|add:'-1' }}-12/{{ url_plus }}">前月</a>
 		{% endifnotequal %}
 	</li>
 	<li class="next">
 		{% ifnotequal month '12' %}
-		<a href="/{{ year }}-{{ month|add:"1" }}/{{ url_plus }}">Next</a>
+		<a href="/{{ year }}-{{ month|add:"1" }}/{{ url_plus }}">次月</a>
 		{% else %}
-		<a href="/{{ year|add:'1' }}-1/{{ url_plus }}">Next</a>
+		<a href="/{{ year|add:'1' }}-1/{{ url_plus }}">次月</a>
 		{% endifnotequal %}
 	</li>
 </ul>

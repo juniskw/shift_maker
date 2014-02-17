@@ -1,54 +1,27 @@
-{% extends "bases/base.html" %}
+{% extends 'schedule/base_a_month.html' %}
 
-{% block title %} {{ year }}-{{ month }} {% endblock %}
+{% block c_nav_class %}disabled{% endblock %}
 
-{% block main %}
-<ul class="nav nav-tabs">	<!--ヘッダー-->
+{% block t_class %}table-hover{% endblock %}
 
-	<li class="disabled">
-		<a href="#">Calendar</a>
-	</li>
-	<li>	<!--シフト表へのリンク-->
-		<a href="/{{ year }}-{{ month }}/shift">Shift</a>
-	</li>
-
-</ul>
-	
-<h1><small>{{ year }}-</small>{{ month }}</h1>	<!--何年の何月？-->
-
-<ul class="pager">
-	<li class="previous">
-		{% ifnotequal month '1' %}
-		<a href="/{{ year }}-{{ month|add:'-1' }}">Previous</a>
-		{% else %}
-		<a href="/{{ year|add:'-1' }}-12">Previous</a>
-		{% endifnotequal %}
-	</li>
-	<li class="next">
-		{% ifnotequal month '12' %}
-		<a href="/{{ year }}-{{ month|add:"1" }}">Next</a>
-		{% else %}
-		<a href="/{{ year|add:'1' }}-1">Next</a>
-		{% endifnotequal %}
-	</li>
-</ul>
-
-<table class="table table-bordered table-hover"><tbody>
-
+{% block t_main %}
+<thead>
 	<tr class="info">
-		<th>Sunday</th>
-		<th>Monday</th>
-		<th>Tuesday</th>
-		<th>Wednesday</th>
-		<th>Thursday</th>
-		<th>Friday</th>
-		<th>Saturday</th>
+		<th>月</th>
+		<th>火</th>
+		<th>水</th>
+		<th>木</th>
+		<th>金</th>
+		<th>土</th>
+		<th>日</th>
 	</tr>
+</thead>
 
+<tbody>
 	{% for week in month_cal %}
 	<tr>
 		{% for day in week %}
-			<td class="table-hover">
+			<td>
 			{% ifnotequal day 0 %}
 				<strong>{{ day }}</strong>
 				<br/>
@@ -57,6 +30,5 @@
 		{% endfor %}
 	</tr>
 	{% endfor %}
-
-</tbody></table>
-{% endblock main %}
+</tbody>
+{% endblock t_main %}
