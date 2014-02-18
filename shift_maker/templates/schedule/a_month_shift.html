@@ -4,9 +4,10 @@
 
 {% block s_nav_class %}disabled{% endblock %}
 
-{% block t_class %}table-condensed table-hover{# table-responsive#}{% endblock %}
+{% block t_class %}table-condensed table-hover{# table-responsive#}{% endblock %}	{# #F5F5F5 #}
 
 {% block t_main %}
+<script type="text/javascript" src="/static/js/a_month_shift.js"></script>
 
 <thead>
 	<tr class="info">	<!--日付-->
@@ -49,7 +50,7 @@
 		<th class="warning">{{ staff }}</th>
 		{% for day in month_cal %}
 			{% ifnotequal day.0 0 %}
-		<td></td>
+		<td class="day_{{ day.0 }}"></td>
 			{% endifnotequal %}
 		{% endfor %}
 	</tr>
