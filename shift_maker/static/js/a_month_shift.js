@@ -18,10 +18,18 @@ $(document).ready(function(e){
 		var dropdown_id = '#s' + staff_id + 'd' + day_num;
 		var dropdown_menu_id = dropdown_id + '_mn';
 
+		var timer;
 		$(dropdown_id).hover(function(){
-			$(dropdown_menu_id).dropdown('toggle');	  
+			timer = setTimeout(function(){
+				$(dropdown_menu_id).show();
+			},500);		  
+		},function(){
+			clearTimeout(timer);
+			$(dropdown_menu_id).hide();		  
 		});
+
 	}
+
 
 	var s_count = $('tbody>tr>th').length;
 
