@@ -7,7 +7,9 @@
 {% block t_class %}table-condensed table-hover{# table-responsive#}{% endblock %}	{# #F5F5F5 #}
 
 {% block t_main %}
-<script type="text/javascript" src="/static/js/a_month_shift.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/a_month_shift.js"></script>
+
+<form action="" method="post">
 
 <thead>
 	<tr class="info">	<!--日付-->
@@ -50,11 +52,23 @@
 		<th class="warning">{{ staff }}</th>
 		{% for day in month_cal %}
 			{% ifnotequal day.0 0 %}
-		<td class="day_{{ day.0 }}"></td>
+		<td class="day_{{ day.0 }}" id="s{{ staff.id }}d{{ day.0 }}">
+
+			<!--DropDown select-->
+			<div class="dropdown">
+				<a data-toggle="dropdown"><!--span class="caret"></span--></a>
+				<ul class="dropdown-menu" id="s{{ staff.id }}d{{ day.0 }}_mn" aria-labelledby="s{{ staff.id }}d{{ day.0 }}">
+					<li><a href="#">ok?</a></li>
+					<li><a href="#">ng?</a></li>
+				</ul>
+			</div>
+
+		</td>
 			{% endifnotequal %}
 		{% endfor %}
 	</tr>
 	{% endfor %}
 </tbody>
 
+</form>
 {% endblock t_main %}
