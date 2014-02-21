@@ -44,4 +44,27 @@ $(document).ready(function(e){
 		}
 	}
 
+/*	$('a#postes').click(function(e){
+		console.log("try");
+		$.post('',{'staff':'1','day':'10'},'JSON');	  
+		//return false;
+	});*/
+
+/*	$.post('',{'name':"me"},function(){
+		alert("ok");		  
+	},'JSON');*///権限がない？
+
+	var checked_all = $('input:checked');
+
+	/*checked_all.each(function(){
+		var parent_id = this.name.split('_dt')[0];		  
+		$('#' + parent_id).append('<strong>' + this.value + '</strong>');
+	});*/
+
+	$('.rd').click(function(){
+		var mystaff = $(this).attr('staff_id');
+		var myday = $(this).attr('day');
+		var form = $('form.t_form:has(input[type="hidden"][name="staff"][value="'+mystaff+'"])').filter(':has(input[type="hidden"][name="day"][value="'+myday+'"])');
+		form.submit();
+	});
 });

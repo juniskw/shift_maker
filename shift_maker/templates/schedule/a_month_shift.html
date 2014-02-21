@@ -9,8 +9,8 @@
 {% block t_main %}
 <script type="text/javascript" src="{{ STATIC_URL }}js/a_month_shift.js"></script>
 
-<form action="" method="post">
-
+<!--form action="" method="post"-->
+<!--{#% csrf_token %#}-->
 <thead>
 	<tr class="info">	<!--日付-->
 		<th></th>
@@ -49,17 +49,34 @@
 <tbody>
 	{% for staff in staffs %}
 	<tr>
-		<th class="warning">{{ staff }}</th>
+		<th class="warning" staff_id="{{ staff.id }}">{{ staff }}</th>
 		{% for day in month_cal %}
 			{% ifnotequal day.0 0 %}
 		<td class="day_{{ day.0 }}" id="s{{ staff.id }}d{{ day.0 }}">
 
 			<!--DropDown select-->
 			<div class="dropdown">
-				<a data-toggle="dropdown"><!--span class="caret"></span--></a>
-				<ul class="dropdown-menu" id="s{{ staff.id }}d{{ day.0 }}_mn" aria-labelledby="s{{ staff.id }}d{{ day.0 }}">
-					<li><a href="#">ok?</a></li>
-					<li><a href="#">ng?</a></li>
+				<a data-toggle="dropdown"></a>
+				<ul class="dropdown-menu" id="s{{ staff.id }}d{{ day.0 }}_mn">
+				<!--RadioChoice-->
+				<form action="" method="post" class="t_form" id="s{{ staff.id }}d{{ day.0 }}_fm">
+				{% csrf_token %}
+					<input type="hidden" name="day" value="{{ day.0 }}">
+					<input type="hidden" name="staff" value="{{ staff.id }}">
+
+				{% for worktime in worktimes %}
+					<li>
+						<div class="form-group">
+							<div class="radio"><label>
+								<input type="radio" name="shift" value="{{ worktime.id }}" class="rd" staff_id="{{staff.id}}" day="{{day.0}}">{{ worktime.id }}.{{ worktime }}
+							</label></div>
+						</div>
+					</li>
+				{% endfor %}
+					<li><div class="form-group">
+						<input type="reset">
+					</div></li>
+				</form>
 				</ul>
 			</div>
 
@@ -69,6 +86,5 @@
 	</tr>
 	{% endfor %}
 </tbody>
-
-</form>
+<!--/form-->
 {% endblock t_main %}
