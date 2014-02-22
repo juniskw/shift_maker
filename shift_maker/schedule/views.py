@@ -1,12 +1,12 @@
 from django.shortcuts import render
-from django.http import HttpResponse,HttpResponseRedirect
+from django.http import HttpResponseRedirect
 
 def home(req):
 	from datetime import datetime
 	
 	now = datetime.now()
 
-	return HttpResponseRedirect( '/%s-%s/' % (now.year,now.month,) )
+	return HttpResponseRedirect( '/%s-%s/shift/' % (now.year,now.month,) )
 
 
 def a_month(req,year_num,month_num):
@@ -30,18 +30,23 @@ def a_month_shift(req,year_num,month_num):
 	from staff.models import *
 	from guest.models import *
 	from calendar import Calendar
+	from datetime import date
 
 	if req.method == 'POST':
 		p_resp = req.POST
 
-		#s_schedule = StaffSchedule.objects.get(staff=p_resp['staff'],date=p_resp['day'])#date=datetime.date(year_num+month_num+p_resp['day'])
+		s_date = date( year=int(year_num),month=int(month_num),day=int(p_resp['day']) )
 
-		#s_schedule.shift = data['shift']
+		try:
+			s_schedule = StaffSchedule.objects.get( date=s_date,staff=int(p_resp['staff']) )
+		except StaffSchedule.DoesNotExist:
+			s_schedule = StaffSchedule(date=s_date)
+			s_schedule.staff = Staff.objects.get( id=int(p_resp['staff']) )
 
-		#s_schedule.save()
+		s_schedule.shift = WorkTime.objects.get( id=int(p_resp['shift']) )
 
-		#return HttpResponseRedirect( '/{year_num}-{month_num}'.format('year_num'=year_num,'month_num'=month_num) )
-		return HttpResponse( "day:%s,staff:%s,shift:%s" % (p_resp['day'],p_resp['staff'],p_resp['shift']) )
+		s_schedule.save()
+
 
 	tmp = 'schedule/a_month_shift.html'
 
@@ -54,7 +59,7 @@ def a_month_shift(req,year_num,month_num):
 		'month_cal':list(month_cal),
 		'staffs':Staff.objects.all().order_by('id'),
 		'worktimes':WorkTime.objects.all().order_by('id'),
-		'staffschedules':StaffSchedule.objects.all().order_by('date'),
+		'staffschedules':StaffSchedule.objects.all().order_by('date'), #filter(date.month=month_num)
 		#'ngshifts':NgShift.objects.all().order_by('date'),
 		#'guests':Guest.objects.all().order_by('name'),
 		#'guestschedules':GuestSchedule.objects.all().order_by('date'),		  
