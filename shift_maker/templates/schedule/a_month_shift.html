@@ -54,13 +54,14 @@
 			<!--DropDown select-->
 			<div class="dropdown">
 				<a data-toggle="dropdown">
-				{% for staffschedule in staffschedules %}
-					{% ifequal cal staffschedule.date %}
-						{% ifequal staff staffschedule.staff %}
-							{{ staffschedule.shift.id }}
-						{% endifequal %}
-					{% endifequal %}
-				{% endfor %}
+
+				{% load schedule_controler %}
+				{% with staffschedules|staff_is:staff as myschedules %}
+					{% with myschedules|date_is:cal as myshift %}
+						{{ myshift.shift.id }}
+					{% endwith %}
+				{% endwith %}
+
 				</a>
 				<ul class="dropdown-menu" id="s{{ staff.id }}d{{ cal.day }}_mn"><div class="container">
 				<!--RadioChoice-->

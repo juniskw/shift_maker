@@ -2,16 +2,15 @@ from django import template
 
 register = template.Library()
 
-def get_schedule(sch_model,day_num,staff_id):
-	return month_num+'month'
+@register.filter(name='staff_is')
+def staff_filter(val,arg):
+	return val.filter(staff=arg)
 
-	import datetime
-	sche_date = datetime.date( year=int(year_num),month=int(month_num),day=int(day_num) )
+@register.filter(name='date_is')
+def date_get(val,arg):
+	from staff.models import StaffSchedule
 	try:
-		schedule = sch_model.objects.get( date=sch_date,staff=int(staff_id) )
-		return schedule
-	except schedule.DoesNotExist:
+		obj = val.get(date=arg)
+		return obj
+	except StaffSchedule.DoesNotExist:
 		return None
-
-
-register.filter('get_schedule',get_schedule)
