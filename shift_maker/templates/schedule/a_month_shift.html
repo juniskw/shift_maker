@@ -12,35 +12,35 @@
 <thead>
 	<tr class="info">	<!--日付-->
 		<th></th>
-	{% for day in month_cal %}
-		{% ifnotequal day.0 0 %}
-		<th class="day_{{ day.0 }}">{{ day.0 }}</th>
-		{% endifnotequal %}
+	{% for cal in month_cal %}
+		{% ifequal cal|date:"n" month %}
+		<th class="day_{{ cal.day }}">{{ cal.day }}</th>
+		{% endifequal %}
 	{% endfor %}
 	</tr>
 
 	<tr class="info">	<!--曜日-->
 		<th></th>
-	{% for day in month_cal %}
-		{% ifnotequal day.0 0 %}
+	{% for cal in month_cal %}
+		{% ifequal cal|date:"n" month %}
 
-			{% ifequal day.1 0 %}
-		<th class="day_{{ day.0 }}">月</th>
-			{% endifequal %}{% ifequal day.1 1 %}
-		<th class="day_{{ day.0 }}">火</th>
-			{% endifequal %}{% ifequal day.1 2 %}
-		<th class="day_{{ day.0 }}">水</th>
-			{% endifequal %}{% ifequal day.1 3 %}
-		<th class="day_{{ day.0 }}">木</th>
-			{% endifequal %}{% ifequal day.1 4 %}
-		<th class="day_{{ day.0 }}">金</th>
-			{% endifequal %}{% ifequal day.1 5 %}
-		<th class="day_{{ day.0 }}">土</th>
-			{% endifequal %}{% ifequal day.1 6 %}
-		<th class="day_{{ day.0 }}">日</th>
+			{% ifequal cal.weekday 0 %}
+		<th class="day_{{ cal.day }}">月</th>
+			{% endifequal %}{% ifequal cal.weekday 1 %}
+		<th class="day_{{ cal.day }}">火</th>
+			{% endifequal %}{% ifequal cal.weekday 2 %}
+		<th class="day_{{ cal.day }}">水</th>
+			{% endifequal %}{% ifequal cal.weekday 3 %}
+		<th class="day_{{ cal.day }}">木</th>
+			{% endifequal %}{% ifequal cal.weekday 4 %}
+		<th class="day_{{ cal.day }}">金</th>
+			{% endifequal %}{% ifequal cal.weekday 5 %}
+		<th class="day_{{ cal.day }}">土</th>
+			{% endifequal %}{% ifequal cal.weekday 6 %}
+		<th class="day_{{ cal.day }}">日</th>
 			{% endifequal %}
 
-		{% endifnotequal %}
+		{% endifequal %}
 	{% endfor %}
 	</tr>
 </thead>
@@ -48,7 +48,7 @@
 	{% for staff in staffs %}
 	<tr>
 		<th class="warning" staff_id="{{ staff.id }}">{{ staff }}</th>
-		{% for cal in month_cal2 %}
+		{% for cal in month_cal %}
 			{% ifequal cal|date:"n" month %}
 		<td class="day_{{ cal.day }}" id="s{{ staff.id }}d{{ cal.day }}">
 			<!--DropDown select-->

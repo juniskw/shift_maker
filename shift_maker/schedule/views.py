@@ -47,17 +47,15 @@ def a_month_shift(req,year_num,month_num):
 
 		s_schedule.save()
 
+	month_cal = Calendar().itermonthdates( int(year_num),int(month_num) )
 
 	tmp = 'schedule/a_month_shift.html'
-
-	month_cal = Calendar().itermonthdays2( int(year_num),int(month_num) )
 
 	contxt = {
 		'url_plus':'shift/',
 		'year':year_num,
 		'month':month_num,
 		'month_cal':list(month_cal),
-		'month_cal2':list(  Calendar().itermonthdates( int(year_num),int(month_num) )  ),
 		'staffs':Staff.objects.all().order_by('id'),
 		'worktimes':WorkTime.objects.all().order_by('id'),
 		'staffschedules':StaffSchedule.objects.all().order_by('staff'),
