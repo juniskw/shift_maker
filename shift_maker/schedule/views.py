@@ -57,9 +57,10 @@ def a_month_shift(req,year_num,month_num):
 		'year':year_num,
 		'month':month_num,
 		'month_cal':list(month_cal),
+		'month_cal2':list(  Calendar().itermonthdates( int(year_num),int(month_num) )  ),
 		'staffs':Staff.objects.all().order_by('id'),
 		'worktimes':WorkTime.objects.all().order_by('id'),
-		'staffschedules':StaffSchedule.objects.all().order_by('date'), #filter(date.month=month_num)
+		'staffschedules':StaffSchedule.objects.all().order_by('staff'),
 		#'ngshifts':NgShift.objects.all().order_by('date'),
 		#'guests':Guest.objects.all().order_by('name'),
 		#'guestschedules':GuestSchedule.objects.all().order_by('date'),		  

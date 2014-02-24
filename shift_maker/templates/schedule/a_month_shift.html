@@ -4,7 +4,7 @@
 
 {% block s_nav_class %}disabled{% endblock %}
 
-{% block t_class %}table-condensed table-hover{# table-responsive#}{% endblock %}	{# #F5F5F5 #}
+{% block t_class %}table-condensed table-hover table-responsive{% endblock %}
 
 {% block t_main %}
 <script type="text/javascript" src="{{ STATIC_URL }}js/a_month_shift.js"></script>
@@ -48,24 +48,32 @@
 	{% for staff in staffs %}
 	<tr>
 		<th class="warning" staff_id="{{ staff.id }}">{{ staff }}</th>
-		{% for day in month_cal %}
-			{% ifnotequal day.0 0 %}
-		<td class="day_{{ day.0 }}" id="s{{ staff.id }}d{{ day.0 }}">
+		{% for cal in month_cal2 %}
+			{% ifequal cal|date:"n" month %}
+		<td class="day_{{ cal.day }}" id="s{{ staff.id }}d{{ cal.day }}">
 			<!--DropDown select-->
 			<div class="dropdown">
-				<a data-toggle="dropdown"></a>
-				<ul class="dropdown-menu" id="s{{ staff.id }}d{{ day.0 }}_mn"><div class="container">
+				<a data-toggle="dropdown">
+				{% for staffschedule in staffschedules %}
+					{% ifequal cal staffschedule.date %}
+						{% ifequal staff staffschedule.staff %}
+							{{ staffschedule.shift.id }}
+						{% endifequal %}
+					{% endifequal %}
+				{% endfor %}
+				</a>
+				<ul class="dropdown-menu" id="s{{ staff.id }}d{{ cal.day }}_mn"><div class="container">
 				<!--RadioChoice-->
-				<form action="" method="post" class="t_form" id="s{{ staff.id }}d{{ day.0 }}_fm">
+				<form action="" method="post" class="t_form" id="s{{ staff.id }}d{{ cal.day }}_fm">
 				{% csrf_token %}
-					<input type="hidden" name="day" value="{{ day.0 }}">
+					<input type="hidden" name="day" value="{{ cal.day }}">
 					<input type="hidden" name="staff" value="{{ staff.id }}">
 
 				{% for worktime in worktimes %}
 					<li>
 						<div class="form-group">
 							<div class="radio"><label>
-								<input type="radio" name="shift" value="{{ worktime.id }}" class="rd" staff_id="{{staff.id}}" day="{{day.0}}">{{ worktime.id }}.{{ worktime }}
+								<input type="radio" name="shift" value="{{ worktime.id }}" class="rd" staff_id="{{ staff.id }}" day="{{ cal.day }}">{{ worktime.id }}.{{ worktime }}
 							</label></div>
 						</div>
 					</li>
@@ -78,7 +86,7 @@
 			</div>
 
 		</td>
-			{% endifnotequal %}
+			{% endifequal %}
 		{% endfor %}
 	</tr>
 	{% endfor %}
