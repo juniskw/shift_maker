@@ -8,6 +8,8 @@
 
 {% block t_main %}
 <script type="text/javascript" src="{{ STATIC_URL }}js/a_month_shift.js"></script>
+				
+	{% load schedule_controler %}
 
 <thead>
 	<tr class="info">	<!--日付-->
@@ -24,21 +26,7 @@
 	{% for cal in month_cal %}
 		{% ifequal cal|date:"n" month %}
 
-			{% ifequal cal.weekday 0 %}
-		<th class="day_{{ cal.day }}">月</th>
-			{% endifequal %}{% ifequal cal.weekday 1 %}
-		<th class="day_{{ cal.day }}">火</th>
-			{% endifequal %}{% ifequal cal.weekday 2 %}
-		<th class="day_{{ cal.day }}">水</th>
-			{% endifequal %}{% ifequal cal.weekday 3 %}
-		<th class="day_{{ cal.day }}">木</th>
-			{% endifequal %}{% ifequal cal.weekday 4 %}
-		<th class="day_{{ cal.day }}">金</th>
-			{% endifequal %}{% ifequal cal.weekday 5 %}
-		<th class="day_{{ cal.day }}">土</th>
-			{% endifequal %}{% ifequal cal.weekday 6 %}
-		<th class="day_{{ cal.day }}">日</th>
-			{% endifequal %}
+		<th class="day_{{ cal.day }}">{{ weekdays|index_is:cal.weekday }}</th>
 
 		{% endifequal %}
 	{% endfor %}
@@ -55,7 +43,6 @@
 			<div class="dropdown">
 				<a data-toggle="dropdown">
 
-				{% load schedule_controler %}
 				{% with staffschedules|staff_is:staff as myschedules %}
 					{% with myschedules|date_is:cal as myshift %}
 						{{ myshift.shift.id }}

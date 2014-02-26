@@ -1,3 +1,5 @@
+#coding:utf-8
+
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 
@@ -56,12 +58,10 @@ def a_month_shift(req,year_num,month_num):
 		'year':year_num,
 		'month':month_num,
 		'month_cal':list(month_cal),
+		'weekdays':['月','火','水','木','金','土','日',],
 		'staffs':Staff.objects.all().order_by('id'),
 		'worktimes':WorkTime.objects.all().order_by('id'),
 		'staffschedules':StaffSchedule.objects.all().order_by('staff'),
-		#'ngshifts':NgShift.objects.all().order_by('date'),
-		#'guests':Guest.objects.all().order_by('name'),
-		#'guestschedules':GuestSchedule.objects.all().order_by('date'),		  
 	}
 
 	return render(req,tmp,contxt)
