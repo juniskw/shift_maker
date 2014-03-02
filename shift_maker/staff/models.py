@@ -5,6 +5,8 @@ from schedule.models import Date,TimeTable
 class WorkTime(TimeTable):
 	title = models.CharField(max_length=50,unique=True)
 
+	#simbol = models.CharField(max_length=5,unique=True)
+
 	def __unicode__(self):
 		return self.title
 
@@ -20,6 +22,10 @@ class StaffSchedule(Date):
 	staff = models.ForeignKey(Staff,unique_for_date='date')
 
 	shift = models.ForeignKey(WorkTime)
+
+	#leader = models.BooleanField(default=False)
+
+	#phoner = models.BooleanField(default=False)
 
 	def __unicode__(self):
 		return self.strfdate()
