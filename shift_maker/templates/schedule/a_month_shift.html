@@ -8,49 +8,48 @@
 
 {% block t_main %}
 <script type="text/javascript" src="{{ STATIC_URL }}js/a_month_shift.js"></script>
+<link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}css/a_month_shift.css">
 				
 	{% load schedule_controler %}
 
 <thead>
-	<tr class="info">	<!--日付-->
-		<th></th>
+	<tr align="center" class="info">	<!--日付-->
+		<th rowspan="2"></th>
 	{% for cal in month_cal %}
-		{% ifequal cal|date:"n" month %}
 		<th class="day_{{ cal.day }}">{{ cal.day }}</th>
-		{% endifequal %}
 	{% endfor %}
+
+	<!--{#% for worktime in worktimes %}
+		<th rowspan="2">{{ worktime.title }}</th>
+	{% endfor %#}-->
 	</tr>
 
 	<tr class="info">	<!--曜日-->
-		<th></th>
 	{% for cal in month_cal %}
-		{% ifequal cal|date:"n" month %}
 
 		<th class="day_{{ cal.day }}">{{ weekdays|index_is:cal.weekday }}</th>
 
-		{% endifequal %}
 	{% endfor %}
 	</tr>
 </thead>
 <tbody>
 	{% for staff in staffs %}
-	<tr>
-		<th class="warning" staff_id="{{ staff.id }}">{{ staff }}</th>
+	<tr align="center">
+		<th class="info" staff_id="{{ staff.id }}">{{ staff }}</th>	<!--rowspan="2"-->
 		{% for cal in month_cal %}
-			{% ifequal cal|date:"n" month %}
 		<td class="day_{{ cal.day }}" id="s{{ staff.id }}d{{ cal.day }}">
 			<!--DropDown select-->
 			<div class="dropdown">
 				<a data-toggle="dropdown">
 
-				{% with staffschedules|staff_is:staff as myschedules %}
-					{% with myschedules|date_is:cal as myshift %}
+				{% with staffschedules|date_is:cal as thisday %}
+					{% with thisday|staff_is:staff as myshift %}
 						{{ myshift.shift.id }}
 					{% endwith %}
 				{% endwith %}
 
 				</a>
-				<ul class="dropdown-menu" id="s{{ staff.id }}d{{ cal.day }}_mn"><div class="container">
+				<ul class="dropdown-menu" id="s{{ staff.id }}d{{ cal.day }}_mn">
 				<!--RadioChoice-->
 				<form action="" method="post" class="t_form" id="s{{ staff.id }}d{{ cal.day }}_fm">
 				{% csrf_token %}
@@ -70,13 +69,34 @@
 						<input type="reset">
 					</div></li>
 				</form>
-				</div></ul>
+				</ul>
 			</div>
 
 		</td>
-			{% endifequal %}
 		{% endfor %}
+
+		<!--{#% for worktime in worktimes %}
+		<td>-->
+			<!--monthscheduleで絞る？-->
+		<!--</td>
+		{% endfor %#}-->
 	</tr>
+
+	<!--tr-->	<!--日直とか-->
+		<!--{#% for cal in month_cal %}
+		<td></td>
+		{% endfor %#}-->
+	<!--/tr-->
+
 	{% endfor %}
 </tbody>
 {% endblock t_main %}
+
+{% block under_table %}
+<form action="" method="post">
+{% csrf_token %}
+	<div class="form-group">
+		<input type="submit" class="btn btn-lg btn-primary" value="Complete!">
+	</div>
+</form>
+{% endblock %}

@@ -7,15 +7,14 @@ register = template.Library()
 def varindex(val,arg):
 	return val[arg]
 
-@register.filter(name='staff_is')
-def staff_filter(val,arg):
-	return val.filter(staff=arg)
-
 @register.filter(name='date_is')
-def date_get(val,arg):
+def date_filter(val,arg):
+	return val.filter(date=arg)
+
+@register.filter(name='staff_is')
+def staff_get(val,arg):
 	from staff.models import StaffSchedule
 	try:
-		obj = val.get(date=arg)
-		return obj
+		return val.get(staff=arg)
 	except StaffSchedule.DoesNotExist:
 		return None

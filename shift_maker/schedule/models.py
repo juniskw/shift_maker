@@ -23,3 +23,10 @@ class TimeTable(models.Model):
 
 	class Meta:
 		abstract = True	# This class is not make table
+
+
+"""
+class MonthCalendar(Date):
+	completed = models.BooleanField(default=False,unique_for_month='date')
+	# check_point = date
+"""

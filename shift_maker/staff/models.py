@@ -1,5 +1,5 @@
 from django.db import models
-from schedule.models import Date,TimeTable
+from schedule.models import Date,TimeTable#,MonthCalendar
 
 
 class WorkTime(TimeTable):
@@ -19,6 +19,8 @@ class Staff(models.Model):
 
 
 class StaffSchedule(Date):
+	##monthcalendar = models.ForeignKey(MonthCalendar)
+
 	staff = models.ForeignKey(Staff,unique_for_date='date')
 
 	shift = models.ForeignKey(WorkTime)
@@ -31,6 +33,8 @@ class StaffSchedule(Date):
 		return self.strfdate()
 
 class NgShift(Date):
+	##monthcalendar = models.ForeignKey(MonthCalendar)
+
 	staff = models.ForeignKey(Staff,unique_for_date='date')
 
 	ng_shift = models.ManyToManyField(WorkTime)
