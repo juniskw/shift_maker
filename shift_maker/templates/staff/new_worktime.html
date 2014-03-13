@@ -1,0 +1,34 @@
+{% extends 'bases/base.html' %}
+
+{% block title %}new WorkTime!{% endblock %}
+
+{% block main %}
+<form action="" method="post" class="form-horizontal">
+{% csrf_token %}
+	<div class="form-group">
+		<label>Title
+			<input type="text" name="title" class="form-control">
+		</label>
+	</div>
+	<div class="form-group">
+		<label>Simbol
+			<input type="text" name="simbol" class="form-control" maxlength="1">
+		</label>
+	</div>
+	<div class="form-group">
+		<label>Start
+			<input type="time" name="start_h" class="form-control" max="23" min="0" maxlength="2">
+			<input type="time" name="start_m" class="form-control" max="59" min="0" maxlength="2">
+		</label>
+	</div>
+	<div class="form-group">
+		<label>End
+			<input type="time" name="end_h" class="form-control" max="23" min="0" maxlength="2">
+			<input type="time" name="end_m" class="form-control" max="59" min="0" maxlength="2">
+		</label>
+	</div>
+	<div class="form-horizontal">
+		<input type="submit" class="btn btn-lg btn-primary" value="Add new worktime!">
+	</div>
+</form>
+{% endblock main %}

@@ -1,5 +1,5 @@
 from django.db import models
-from schedule.models import Date,TimeTable#,MonthCalendar
+from schedule.models import Date,TimeTable,MonthSchedule
 
 
 class Guest(models.Model):
@@ -10,15 +10,15 @@ class Guest(models.Model):
 
 
 class GuestSchedule(Date,TimeTable):
-	##monthcalendar = models.ForeignKey(MonthCalendar)
-
 	guest = models.ForeignKey(Guest,unique_for_date='date')
+
+	def save(self,*args,**kwargs):
+		self.parent = MonthSchedule.objects.get_or_create(year=self.date.year,month=self.date.month)
+		super(StaffSchedule,self).save(*args,**kwargs)
 
 	def __unicode__(self):
 		return self.strfdate()
 
 
-"""
 class GuestTime(TimeTable):
-	date = models.ForeignKey(GuestSchedule)
-"""
+	date = models.OneToOneField(GuestSchedule)

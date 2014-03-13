@@ -14,6 +14,10 @@ urlpatterns += patterns('schedule.views',
     url(r'^$', 'home', name="Please wait..."),
 
 	 url(r'^%s/$' % (month_url,),'a_month',name="Month"),
-	 #url(r'^{month}/{day}/$'.format('month'=month_url,'day'=day_url),'a_day',name="Day"),
 	 url(r'^%s/shift/$' % (month_url,),'a_month_shift',name="MonthShift"),
+)
+
+urlpatterns += patterns('staff.views',
+	 url(r'^staff/new/$','new_staff',name="NewStaff"),
+	 url(r'^worktime/new/$','new_worktime',name="NewWorkTime"),
 )

@@ -29,32 +29,35 @@ def a_month(req,year_num,month_num):
 
 
 def a_month_shift(req,year_num,month_num):
+	from schedule.models import MonthSchedule	#
 	from staff.models import WorkTime,Staff,StaffSchedule,NgShift
 	from guest.models import Guest,GuestSchedule
 	from calendar import Calendar
 	from datetime import date
 
-	if req.method == 'POST':
-		p_resp = req.POST
+	year,month = int(year_num),int(month_num)
 
-		s_date = date( year=int(year_num),month=int(month_num),day=int(p_resp['day']) )
+	if req.method == 'POST':
+		posted = req.POST
+
+		s_date = date( year=year,month=month,day=int(posted['day']) )
 
 		try:
-			s_schedule = StaffSchedule.objects.get( date=s_date,staff=int(p_resp['staff']) )
+			s_schedule = StaffSchedule.objects.get( date=s_date,staff=int(posted['staff']) )
 		except StaffSchedule.DoesNotExist:
 			s_schedule = StaffSchedule(date=s_date)
-			s_schedule.staff = Staff.objects.get( id=int(p_resp['staff']) )
+			s_schedule.staff = Staff.objects.get( id=int(posted['staff']) )
 
-		s_schedule.shift = WorkTime.objects.get( id=int(p_resp['shift']) )
+		s_schedule.shift = WorkTime.objects.get( id=int(posted['shift']) )
 
 		s_schedule.save()
 
 	def get_month_cal():
-		cal_start = date( int(year_num),int(month_num),15 )
+		cal_start = date( year,month,15 )
 		cal_end = cal_start.replace(month=cal_start.month+1)
 		
-		this_month = list( Calendar().itermonthdates( int(year_num),int(month_num) ) )
-		next_month = list( Calendar().itermonthdates( int(year_num),int(month_num)+1 ) )
+		this_month = list( Calendar().itermonthdates( year,month ) )
+		next_month = list( Calendar().itermonthdates( year,month+1 ) )
 		
 		wcal = this_month + next_month
 		wcal_list = wcal[wcal.index(cal_start):wcal.index(cal_end)]

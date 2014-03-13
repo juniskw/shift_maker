@@ -1,4 +1,5 @@
 from django.contrib import admin
+from schedule.models import MonthSchedule
 
 
 class DateAdmin(admin.ModelAdmin):
@@ -16,3 +17,6 @@ class TimeTableAdmin(admin.ModelAdmin):
 		return obj.strftimetable()
 
 	time_table.short_description = 'TimeTable'
+
+
+admin.site.register(MonthSchedule)
