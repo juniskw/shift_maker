@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User#,Group
 from schedule.models import Date,TimeTable,MonthSchedule
 
 
@@ -33,15 +33,11 @@ class Staff(models.Model):
 class StaffSchedule(Date):
 	staff = models.ForeignKey(Staff,unique_for_date='date')
 
-	shift = models.ForeignKey(WorkTime)
+	worktime = models.ForeignKey(WorkTime)
 
-	def save(self,*args,**kwargs):
-		self.parent = MonthSchedule.objects.get_or_create(year=self.date.year,month=self.date.month)
-		super(StaffSchedule,self).save(*args,**kwargs)
+	leader = models.BooleanField(default=False)
 
-	#leader = models.BooleanField(default=False)
-
-	#phoner = models.BooleanField(default=False)
+	phoner = models.BooleanField(default=False)
 
 	def __unicode__(self):
 		return self.strfdate()

@@ -38,7 +38,6 @@ class MonthSchedule(models.Model):
 	class Meta:
 		unique_together = ( ('year','month',), )
 
-"""
 	def get_calendar(self):
 		from calendar import Calendar
 		year,month = self.year,self.month
@@ -54,4 +53,3 @@ class MonthSchedule(models.Model):
 		wcal_list = wcal[wcal.index(cal_start):wcal.index(cal_end)]
 
 		return sorted( set(wcal_list),key=wcal_list.index )
-"""

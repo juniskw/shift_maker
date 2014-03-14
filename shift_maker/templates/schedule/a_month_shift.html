@@ -42,8 +42,8 @@
 			<div class="dropdown">
 				<a data-toggle="dropdown">
 
-				{% with staffschedules|date_is:cal as thisday %}
-					{% with thisday|staff_is:staff as myshift %}
+				{% with staffschedules|date_filter:cal as thisday %}
+					{% with thisday|staff_get:staff as myshift %}
 						{{ myshift.shift.id }}
 					{% endwith %}
 				{% endwith %}
