@@ -1,6 +1,13 @@
 from django.db import models
-from django.contrib.auth.models import User#,Group
-from schedule.models import Date,TimeTable,MonthSchedule
+from django.contrib.auth.models import User
+from schedule.models import Date,TimeTable,Month
+from owner.models import GroupSchedule
+
+
+class MonthShift(Month):
+	schedule_group = models.ForeignKey(GroupSchedule)
+
+	completed = models.BooleanField(default=False)
 
 
 class WorkTime(TimeTable):
@@ -15,7 +22,6 @@ class WorkTime(TimeTable):
 
 			self.end = time(23,59)
 		super(WorkTime,self).save(*args,**kwargs)
-
 
 	def __unicode__(self):
 		return self.title

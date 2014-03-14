@@ -1,14 +1,13 @@
 #coding:utf-8
 
-from django.shortcuts import render
-from django.http import HttpResponseRedirect
+from django.shortcuts import render,redirect
 
 def home(req):
 	from datetime import datetime
 	
 	now = datetime.now()
 
-	return HttpResponseRedirect( '/%s-%s/shift/' % (now.year,now.month,) )
+	return redirect( '/%s-%s/shift/' % (now.year,now.month,) )
 
 
 def a_month(req,year_num,month_num):

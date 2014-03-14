@@ -26,6 +26,7 @@ INSTALLED_APPS = (
 	 'schedule',
 	 'staff',
 	 'guest',
+	 'owner',
 )
 
 MIDDLEWARE_CLASSES = (

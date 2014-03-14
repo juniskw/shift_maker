@@ -26,17 +26,10 @@ class TimeTable(models.Model):
 		abstract = True	# This class is not make table
 
 
-class MonthSchedule(models.Model):
+class Month(models.Model):
 	year = models.PositiveIntegerField(validators=[MinValueValidator(1),])
 
 	month = models.PositiveIntegerField(validators=[MaxValueValidator(12),MinValueValidator(1),])
-
-	point = models.PositiveIntegerField(default=1,validators=[MaxValueValidator(31),MinValueValidator(1),])
-
-	completed = models.BooleanField(default=False)
-
-	class Meta:
-		unique_together = ( ('year','month',), )
 
 	def get_calendar(self):
 		from calendar import Calendar
@@ -53,3 +46,8 @@ class MonthSchedule(models.Model):
 		wcal_list = wcal[wcal.index(cal_start):wcal.index(cal_end)]
 
 		return sorted( set(wcal_list),key=wcal_list.index )
+
+	class Meta:
+		unique_together = ( ('year','month',), )
+
+		abstract = True

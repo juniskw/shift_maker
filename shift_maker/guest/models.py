@@ -1,5 +1,6 @@
 from django.db import models
-from schedule.models import Date,TimeTable,MonthSchedule
+from schedule.models import Date,TimeTable
+from owner.models import GroupSchedule
 
 
 class Guest(models.Model):
@@ -10,6 +11,8 @@ class Guest(models.Model):
 
 
 class GuestSchedule(Date,TimeTable):
+	groupschedule = models.ForeignKey(GroupSchedule)
+
 	guest = models.ForeignKey(Guest,unique_for_date='date')
 
 	def __unicode__(self):
