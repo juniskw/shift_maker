@@ -9,6 +9,25 @@ class MonthShift(Month):
 
 	completed = models.BooleanField(default=False)
 
+	def get_calendar(self):
+		from calendar import Calendar
+		year,month = self.year,self.month
+
+		from datetime import date
+		cal_start = date( year,month,self.schedule_group.start_point )
+		cal_end = cal_start.replace(month=cal_start.month+1)
+		
+		this_month = list( Calendar().itermonthdates( year,month ) )
+		next_month = list( Calendar().itermonthdates( year,month+1 ) )
+		
+		wcal = this_month + next_month
+		wcal_list = wcal[wcal.index(cal_start):wcal.index(cal_end)]
+
+		return sorted( set(wcal_list),key=wcal_list.index )
+
+	class Meta:
+		unique_together = ( ('year','month','schedule_group',), )
+
 
 class WorkTime(TimeTable):
 	title = models.CharField(max_length=50,unique=True)
