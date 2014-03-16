@@ -28,8 +28,7 @@ def a_month(req,year_num,month_num):
 
 
 def a_month_shift(req,year_num,month_num):
-	from schedule.models import MonthSchedule	#
-	from staff.models import WorkTime,Staff,StaffSchedule,NgShift
+	from staff.models import WorkTime,MonthShift,Staff,StaffSchedule,NgShift
 	from guest.models import Guest,GuestSchedule
 	from calendar import Calendar
 	from datetime import date
@@ -51,19 +50,9 @@ def a_month_shift(req,year_num,month_num):
 
 		s_schedule.save()
 
-	def get_month_cal():
-		cal_start = date( year,month,15 )
-		cal_end = cal_start.replace(month=cal_start.month+1)
-		
-		this_month = list( Calendar().itermonthdates( year,month ) )
-		next_month = list( Calendar().itermonthdates( year,month+1 ) )
-		
-		wcal = this_month + next_month
-		wcal_list = wcal[wcal.index(cal_start):wcal.index(cal_end)]
+	monthshift = req.user.groupschedule.monthshift_set.get(year=year,month=month)	#
 
-		return sorted( set(wcal_list),key=wcal_list.index )	# speedcheck
-
-	month_cal = get_month_cal()
+	month_cal = monthshift.get_calendar()
 
 	def get_month_schedules(sch,cal):
 		month_schedules = list()

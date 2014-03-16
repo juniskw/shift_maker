@@ -5,7 +5,7 @@ from owner.models import GroupSchedule
 
 
 class MonthShift(Month):
-	schedule_group = models.ForeignKey(GroupSchedule)
+	groupschedule = models.ForeignKey(GroupSchedule)
 
 	completed = models.BooleanField(default=False)
 
@@ -14,7 +14,7 @@ class MonthShift(Month):
 		year,month = self.year,self.month
 
 		from datetime import date
-		cal_start = date( year,month,self.schedule_group.start_point )
+		cal_start = date( year,month,self.groupschedule.start_point )
 		cal_end = cal_start.replace(month=cal_start.month+1)
 		
 		this_month = list( Calendar().itermonthdates( year,month ) )
@@ -26,10 +26,12 @@ class MonthShift(Month):
 		return sorted( set(wcal_list),key=wcal_list.index )
 
 	class Meta:
-		unique_together = ( ('year','month','schedule_group',), )
+		unique_together = ( ('year','month','groupschedule',), )
 
 
 class WorkTime(TimeTable):
+	groupschedule = models.ForeignKey(GroupSchedule)
+
 	title = models.CharField(max_length=50,unique=True)
 
 	simbol = models.CharField(max_length=5,unique=True)
@@ -42,14 +44,22 @@ class WorkTime(TimeTable):
 			self.end = time(23,59)
 		super(WorkTime,self).save(*args,**kwargs)
 
+	class Meta:
+		unique_together = ( ('groupschedule','title',),('groupschedule','simbol',), )
+
 	def __unicode__(self):
 		return self.title
 
 
 class Staff(models.Model):
-	name = models.CharField(max_length=40,unique=True)
+	groupschedule = models.ForeignKey(GroupSchedule)
+
+	name = models.CharField(max_length=40)
 
 	user = models.OneToOneField(User,null=True,blank=True)
+
+	class Meta:
+		unique_together = ( ('name','groupschedule',), )
 
 	def __unicode__(self):
 		return self.name

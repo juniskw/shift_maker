@@ -1,3 +1,4 @@
 from django.contrib import admin
+from owner.models import GroupSchedule
 
-# Register your models here.
+admin.site.register(GroupSchedule)

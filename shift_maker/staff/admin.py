@@ -1,5 +1,5 @@
 from django.contrib import admin
-from staff.models import WorkTime,Staff,StaffSchedule,NgShift
+from staff.models import WorkTime,MonthShift,Staff,StaffSchedule,NgShift
 from schedule.admin import DateAdmin,TimeTableAdmin
 
 class WorkTimeAdmin(TimeTableAdmin):
@@ -25,7 +25,7 @@ admin.site.register(Staff,StaffAdmin)
 
 
 class StaffScheduleAdmin(DateAdmin):
-	list_display = ('schedule_date','staff','shift',)	# schedule_date from schedule/admin
+	list_display = ('schedule_date','staff','worktime',)	# schedule_date from schedule/admin
 
 	list_filter = ['date','staff',]
 
@@ -43,3 +43,4 @@ class NgShiftAdmin(DateAdmin):
 	list_filter = ['date','staff',]
 
 admin.site.register(NgShift,NgShiftAdmin)
+admin.site.register(MonthShift)

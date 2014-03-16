@@ -4,15 +4,18 @@ from owner.models import GroupSchedule
 
 
 class Guest(models.Model):
-	name = models.CharField(max_length=40,unique=True)
+	groupschedule = models.ForeignKey(GroupSchedule)
+
+	name = models.CharField(max_length=40)
+
+	class Meta:
+		unique_together = ( ('name','groupschedule',), )
 
 	def __unicode__(self):
 		return self.name
 
 
 class GuestSchedule(Date,TimeTable):
-	groupschedule = models.ForeignKey(GroupSchedule)
-
 	guest = models.ForeignKey(Guest,unique_for_date='date')
 
 	def __unicode__(self):
