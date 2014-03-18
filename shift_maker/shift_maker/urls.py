@@ -12,6 +12,8 @@ urlpatterns = patterns('',
 
 owner_url = 'owner'
 urlpatterns += patterns('owner.views',
+	url(r'^login/$','log_in',name="LogIn"),
+	url(r'^logout/$','log_out',name="LogOut"),
 	url(r'^%s/new/$' % owner_url,'new_owner',name="newOwner"),
 )
 

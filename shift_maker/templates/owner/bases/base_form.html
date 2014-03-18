@@ -1,0 +1,11 @@
+{% extends 'bases/base.html' %}
+
+{% block main %}
+<h1>insert Header in here</h1>
+<form action="" method="post">
+{% csrf_token %}
+	<div class="jumbotron">
+	{% block form %}{% endblock %}
+	</div>
+</form>
+{% endblock main %}

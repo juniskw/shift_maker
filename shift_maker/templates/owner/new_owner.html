@@ -1,17 +1,12 @@
-{% extends 'bases/base.html' %}
+{% extends 'owner/bases/base_form.html' %}
 
 {% block title %}new Owner!{% endblock %}
 
-{% block main %}
-<div class="jumbotron">
-	<form action="" method="post">
-	{% csrf_token %}
-		<h1>new Owner!<small>{{ error_msg }}</small></h1>
-		{% include 'parts/forms/input.html' with label='Name:' type='text' name='name' class='input-lg' %}
-		{% include 'parts/forms/input.html' with label='Password:' type='password' name='password' class='input-lg' %}
-		{% include 'parts/forms/input.html' with label='Password for check:' type='password' name='pass_check' class='input-lg' %}
+{% block form %}
+<h1>new Owner!<small>{{ error_msg }}</small></h1>
+	{% include 'owner/parts/name_input.html' %}
+	{% include 'owner/parts/pass_input.html' %}
+	{% include 'owner/parts/pass_input2.html' %}
 
-		{% include 'parts/forms/submit.html' with class='btn-lg btn-primary' value='Create!' %}
-	</form>
-</div>
-{% endblock main %}
+	{% include 'owner/parts/submit.html' with value="Create new owner!" %}
+{% endblock form %}

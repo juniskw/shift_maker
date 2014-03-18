@@ -1,0 +1,11 @@
+{% extends 'owner/bases/base_form.html' %}
+
+{% block title %}Log in{% endblock %}
+
+{% block form %}
+<h1>Log in<small>{{ error_msg }}</small></h1>
+	{% include 'owner/parts/name_input.html' %}
+	{% include 'owner/parts/pass_input.html' %}
+
+	{% include 'owner/parts/submit.html' with value='Log in!' %}
+{% endblock form %}
