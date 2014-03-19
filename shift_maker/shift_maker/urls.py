@@ -10,11 +10,11 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
 )
 
-owner_url = 'owner'
 urlpatterns += patterns('owner.views',
 	url(r'^login/$','log_in',name="LogIn"),
 	url(r'^logout/$','log_out',name="LogOut"),
-	url(r'^%s/new/$' % owner_url,'new_owner',name="newOwner"),
+	url(r'^owner/new/$','new_owner',name="newOwner"),
+	url(r'^owner/schedule/create/$','create_groupschedule',name="CreateSchedule"),
 )
 
 urlpatterns += patterns('schedule.views',

@@ -1,6 +1,6 @@
-{% extends "schedule/base_a_month.html"  %}
+{% extends "schedule/bases/base_a_month.html"  %}
 
-{% block title %} Shift:{{ year }}-{{ month }} {% endblock %}
+{% block title %} Shift:{{ year }}/{{ month }}-{{ month|add:1 }} {% endblock %}
 
 {% block s_nav_class %}disabled{% endblock %}
 
@@ -38,40 +38,7 @@
 		<th class="info" staff_id="{{ staff.id }}">{{ staff }}</th>	<!--rowspan="2"-->
 		{% for cal in month_cal %}
 		<td class="day_{{ cal.day }}" id="s{{ staff.id }}d{{ cal.day }}">
-			<!--DropDown select-->
-			<div class="dropdown">
-				<a data-toggle="dropdown">
-
-				{% with staffschedules|date_filter:cal as thisday %}
-					{% with thisday|staff_get:staff as myshift %}
-						{{ myshift.shift.id }}
-					{% endwith %}
-				{% endwith %}
-
-				</a>
-				<ul class="dropdown-menu" id="s{{ staff.id }}d{{ cal.day }}_mn">
-				<!--RadioChoice-->
-				<form action="" method="post" class="t_form" id="s{{ staff.id }}d{{ cal.day }}_fm">
-				{% csrf_token %}
-					<input type="hidden" name="day" value="{{ cal.day }}">
-					<input type="hidden" name="staff" value="{{ staff.id }}">
-
-				{% for worktime in worktimes %}
-					<li>
-						<div class="form-group">
-							<div class="radio"><label>
-								<input type="radio" name="shift" value="{{ worktime.id }}" class="rd" staff_id="{{ staff.id }}" day="{{ cal.day }}">{{ worktime.id }}.{{ worktime }}
-							</label></div>
-						</div>
-					</li>
-				{% endfor %}
-					<li><div class="form-group">
-						<input type="reset">
-					</div></li>
-				</form>
-				</ul>
-			</div>
-
+			{% include 'schedule/parts/dropdown.html' %}
 		</td>
 		{% endfor %}
 

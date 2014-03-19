@@ -1,7 +1,9 @@
 #coding:utf-8
-
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render,redirect
 
+
+@login_required
 def home(req):
 	from datetime import datetime
 	
@@ -10,6 +12,7 @@ def home(req):
 	return redirect( '/%s-%s/shift/' % (now.year,now.month,) )
 
 
+@login_required
 def a_month(req,year_num,month_num):
 	from staff.models import StaffSchedule
 	from calendar import Calendar
@@ -27,6 +30,7 @@ def a_month(req,year_num,month_num):
 	return render( req,tmp,cntxt )
 
 
+@login_required
 def a_month_shift(req,year_num,month_num):
 	from staff.models import WorkTime,MonthShift,Staff,StaffSchedule,NgShift
 	from guest.models import Guest,GuestSchedule
@@ -46,7 +50,7 @@ def a_month_shift(req,year_num,month_num):
 			s_schedule = StaffSchedule(date=s_date)
 			s_schedule.staff = Staff.objects.get( id=int(posted['staff']) )
 
-		s_schedule.shift = WorkTime.objects.get( id=int(posted['shift']) )
+		s_schedule.worktime = WorkTime.objects.get( id=int(posted['shift']) )
 
 		s_schedule.save()
 
@@ -76,9 +80,9 @@ def a_month_shift(req,year_num,month_num):
 		'month_cal':month_cal,
 		'weekdays':['月','火','水','木','金','土','日',],
 
-		'staffs':Staff.objects.all().order_by('id'),
-		'worktimes':WorkTime.objects.all().order_by('id'),
-		'staffschedules':StaffSchedule.objects.all().order_by('staff'),
+		'staffs':Staff.objects.order_by('id'),
+		'worktimes':WorkTime.objects.order_by('id'),
+		'staffschedules':GroupSchedule.staff_set,
 	}
 
 	return render(req,tmp,contxt)

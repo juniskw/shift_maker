@@ -1,0 +1,34 @@
+<!--DropDown select-->
+{% load schedule_controler %}
+<div class="dropdown">
+	<a data-toggle="dropdown">
+
+	{% with staffschedules|date_filter:cal as thisday %}
+		{% with thisday|staff_get:staff as myshift %}
+			{{ myshift.shift.id }}
+		{% endwith %}
+	{% endwith %}
+
+	</a>
+	<ul class="dropdown-menu" id="s{{ staff.id }}d{{ cal.day }}_mn">
+	<!--RadioChoice-->
+		<form action="" method="post" class="t_form" id="s{{ staff.id }}d{{ cal.day }}_fm">
+		{% csrf_token %}
+			<input type="hidden" name="day" value="{{ cal.day }}">
+			<input type="hidden" name="staff" value="{{ staff.id }}">
+
+			{% for worktime in worktimes %}
+			<li>
+				<div class="form-group">
+					<div class="radio"><label>
+						<input type="radio" name="shift" value="{{ worktime.id }}" class="rd" staff_id="{{ staff.id }}" day="{{ cal.day }}">{{ worktime.id }}.{{ worktime }}
+					</label></div>
+				</div>
+			</li>
+		{% endfor %}
+			<li><div class="form-group">
+				<input type="reset">
+			</div></li>
+		</form>
+	</ul>
+</div>

@@ -1,0 +1,9 @@
+{% extends 'owner/bases/base_form.html' %}
+
+{% block title %}new Schedule!{% endblock %}
+
+{% block form %}
+	{% include 'owner/parts/name_input.html' %}
+	{% include 'parts/forms/input.html' with label='Start point in this Schedule:' type='number' name='start_point' class='input-lg' %}
+	{% include 'owner/parts/submit.html' with value='Create your Schedule!' %}
+{% endblock form %}
