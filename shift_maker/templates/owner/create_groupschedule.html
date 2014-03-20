@@ -4,6 +4,6 @@
 
 {% block form %}
 	{% include 'owner/parts/name_input.html' %}
-	{% include 'parts/forms/input.html' with label='Start point in this Schedule:' type='number' name='start_point' class='input-lg' %}
+	{% include 'owner/parts/select_number.html' %}
 	{% include 'owner/parts/submit.html' with value='Create your Schedule!' %}
 {% endblock form %}

@@ -70,12 +70,19 @@ def create_groupschedule(req):
 	if req.method == 'POST':
 		posted = req.POST
 
-		new_group = Group(name=posted['name'])
-		new_groupschedule = GroupSchedule(start_point=int(posted['start_point']),owner=req.user)
+		try:
+			groupschedule = GroupSchedule.objects.get(owner=req.user)
+		except GroupSchedule.DoesNotExist:
+			groupschedule = GroupSchedule(owner=req.user,start_point=int(posted['start_point']))
 
-		new_group.save()
+		groupschedule.start_point = int(posted['start_point'])
 
-		new_groupschedule.group = new_group
-		new_groupschedule.save()
+		try:
+			groupschedule.group.name = posted['name']
+			groupschedule.group.save()
+		except Exception:#GroupSchedule.DoesNotExist:
+			groupschedule.group = Group.objects.create(name=posted['name'])
+
+		groupschedule.save()
 
 	return render(req,'owner/create_groupschedule.html')
