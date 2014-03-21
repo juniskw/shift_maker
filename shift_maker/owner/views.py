@@ -63,7 +63,7 @@ def new_owner(req):
 
 
 @login_required
-def create_groupschedule(req):
+def edit_groupschedule(req):
 	from django.contrib.auth.models import Group
 	from owner.models import GroupSchedule
 
@@ -82,4 +82,4 @@ def create_groupschedule(req):
 		groupschedule.start_point = int(posted['start_point'])
 		groupschedule.save()
 
-	return render(req,'owner/create_groupschedule.html')
+	return render(req,'owner/edit_groupschedule.html')

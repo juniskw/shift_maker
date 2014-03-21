@@ -14,7 +14,7 @@ urlpatterns += patterns('owner.views',
 	url(r'^login/$','log_in',name="LogIn"),
 	url(r'^logout/$','log_out',name="LogOut"),
 	url(r'^owner/new/$','new_owner',name="newOwner"),
-	url(r'^owner/schedule/create/$','create_groupschedule',name="CreateSchedule"),
+	url(r'^owner/schedule/edit/$','edit_groupschedule',name="EditSchedule"),
 )
 
 urlpatterns += patterns('schedule.views',
