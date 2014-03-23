@@ -1,6 +1,9 @@
 <div class="form-group">
 	<select class="form-control" name="start_point">
-		<option>1</option>
-		<option>15</option>
-	</select>
+	{% for choice in select_choices %}
+		<option value="{{ choice }}" {% ifequal choice start_point %}selected{% endifequal %}>
+		{{ choice }}
+		</option>
+	{% endfor %}
+	</select>日〜一ヶ月間
 </div>

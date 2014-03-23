@@ -3,7 +3,7 @@
 {% block title %}new Schedule!{% endblock %}
 
 {% block form %}
-	{% include 'owner/parts/name_input.html' %}
-	{% include 'owner/parts/select_number.html' %}
+	{% include 'owner/parts/name_input.html' with value=group_name %}
+	{% include 'owner/parts/select_number.html' with start_point=start_point select_choices=select_choices %}
 	{% include 'owner/parts/submit.html' with value='Create your Schedule!' %}
 {% endblock form %}

@@ -66,20 +66,38 @@ def new_owner(req):
 def edit_groupschedule(req):
 	from django.contrib.auth.models import Group
 	from owner.models import GroupSchedule
+		
+	try:
+		groupschedule = GroupSchedule.objects.get(owner=req.user)
+		group = groupschedule.group
+	except GroupSchedule.DoesNotExist:
+		groupschedule = GroupSchedule(owner=req.user)
+		group = Group()
 
 	if req.method == 'POST':
 		posted = req.POST
 
-		try:
-			groupschedule = GroupSchedule.objects.get(owner=req.user)
-			group = groupschedule.group
-			group.name = posted['name']
-			group.save()
-		except GroupSchedule.DoesNotExist:
-			group = Group.objects.create(name=posted['name'])
-			groupschedule = GroupSchedule(owner=req.user,group=group,start_point=int(posted['start_point']))
+		group.name = posted['name']
+		group.save()
 
+		groupschedule.group = group
 		groupschedule.start_point = int(posted['start_point'])
 		groupschedule.save()
 
-	return render(req,'owner/edit_groupschedule.html')
+		#try:
+			#groupschedule = GroupSchedule.objects.get(owner=req.user)
+			#group = groupschedule.group
+			#group.name = posted['name']
+			#group.save()
+		#except GroupSchedule.DoesNotExist:
+			#group = Group.objects.create(name=posted['name'])
+			#groupschedule = GroupSchedule(owner=req.user,group=group,start_point=int(posted['start_point']))
+
+		#groupschedule.start_point = int(posted['start_point'])
+		#groupschedule.save()
+
+	return render(req,'owner/edit_groupschedule.html',{
+		'group_name':group.name,
+		'start_point':groupschedule.start_point,
+		'select_choices':(1,5,10,15,20,25,),
+	})
