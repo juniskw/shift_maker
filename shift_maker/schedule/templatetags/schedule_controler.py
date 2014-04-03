@@ -28,3 +28,11 @@ def staff_get(val,arg):
 		return val.get(staff=arg)
 	except StaffSchedule.DoesNotExist:
 		return None
+
+@register.filter
+def date_get(val,arg):
+	from staff.models import StaffSchedule
+	try:
+		return val.get(date=arg)
+	except StaffSchedule.DoesNotExist:
+		return None

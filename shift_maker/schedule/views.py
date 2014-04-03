@@ -32,6 +32,7 @@ def a_month(req,year_num,month_num):
 
 @login_required
 def a_month_shift(req,year_num,month_num):
+	from owner.models import GroupSchedule
 	from staff.models import WorkTime,MonthShift,Staff,StaffSchedule,NgShift
 	from guest.models import Guest,GuestSchedule
 	from calendar import Calendar
@@ -39,10 +40,16 @@ def a_month_shift(req,year_num,month_num):
 
 	year,month = int(year_num),int(month_num)
 
+	try:
+		groupschedule = GroupSchedule.objects.get(owner=req.user)
+	except GroupSchedule.DoesNotExist:
+		return redirect('/owner/schedule/edit')
+
 	if req.method == 'POST':
 		posted = req.POST
 
-		s_date = date( year=year,month=month,day=int(posted['day']) )
+		s_date = date(posted['date'])
+		#s_date = date( year=year,month=month,day=int(posted['day']) )
 
 		try:
 			s_schedule = StaffSchedule.objects.get( date=s_date,staff=int(posted['staff']) )
@@ -54,9 +61,12 @@ def a_month_shift(req,year_num,month_num):
 
 		s_schedule.save()
 
-	monthshift = req.user.groupschedule.monthshift_set.get(year=year,month=month)	#
+	try:
+		monthshift = groupschedule.monthshift_set.get(year=year,month=month)	#
+	except MonthShift.DoesNotExist:
+		pass
 
-	month_cal = monthshift.get_calendar()
+	month_cal = groupschedule.get_calendar(year,month)
 
 	def get_month_schedules(sch,cal):
 		month_schedules = list()
@@ -80,9 +90,8 @@ def a_month_shift(req,year_num,month_num):
 		'month_cal':month_cal,
 		'weekdays':['月','火','水','木','金','土','日',],
 
-		'staffs':Staff.objects.order_by('id'),
-		'worktimes':WorkTime.objects.order_by('id'),
-		'staffschedules':GroupSchedule.staff_set,
+		'staffs':groupschedule.staff_set.order_by('id'),
+		'worktimes':groupschedule.worktime_set.order_by('id'),
 	}
 
 	return render(req,tmp,contxt)
