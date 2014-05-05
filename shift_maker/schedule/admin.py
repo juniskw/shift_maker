@@ -23,20 +23,22 @@ class TimeTableAdmin(admin.ModelAdmin):
 ###### staff ######
 class MonthScheduleAdmin(admin.ModelAdmin):
 	list_display = ('year','month','groupschedule','completed',)
+	list_filter = ('groupschedule',)
 
 admin.site.register(MonthShift)
 
 
 class WorkTimeAdmin(TimeTableAdmin):
-	list_display = ('title','time_table',)	# time_table from schedule/admin
+	list_display = ('title','time_table',)	# time_table from parent
+	list_filter = ('groupschedule',)
 
 admin.site.register(WorkTime,WorkTimeAdmin)
 
 
 class StaffScheduleAdmin(DateAdmin):
-	list_display = ('schedule_date','staff','worktime',)	# schedule_date from schedule/admin
+	list_display = ('schedule_date','staff','worktime',)	# schedule_date from parent
 
-	list_filter = ['date','staff',]
+	list_filter = ('staff__groupschedule','date','staff',)
 
 admin.site.register(StaffSchedule,StaffScheduleAdmin)#,StaffScheduleAdmin)
 

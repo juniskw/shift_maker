@@ -63,8 +63,8 @@ $(document).ready(function(e){
 
 	$('.rd').click(function(){
 		var mystaff = $(this).attr('staff_id');
-		var mydate = $(this).attr('date');
-		var form = $('form.t_form:has(input[type="hidden"][name="staff"][value="'+mystaff+'"])').filter(':has(input[type="hidden"][name="date"][value="'+mydate+'"])');
+		var mydate = $(this).attr('day');
+		var form = $('form.t_form:has(input[type="hidden"][name="staff"][value="'+mystaff+'"])').filter(':has(input[type="hidden"][name="day"][value="'+mydate+'"])');
 		form.submit();
 	});
 });

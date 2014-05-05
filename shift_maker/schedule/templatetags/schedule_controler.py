@@ -23,7 +23,7 @@ def worktime_filter(val,arg):
 #### gets ####
 @register.filter
 def staff_get(val,arg):
-	from staff.models import StaffSchedule
+	from schedule.models import StaffSchedule
 	try:
 		return val.get(staff=arg)
 	except StaffSchedule.DoesNotExist:
@@ -31,7 +31,7 @@ def staff_get(val,arg):
 
 @register.filter
 def date_get(val,arg):
-	from staff.models import StaffSchedule
+	from schedule.models import StaffSchedule
 	try:
 		return val.get(date=arg)
 	except StaffSchedule.DoesNotExist:

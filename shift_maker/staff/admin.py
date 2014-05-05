@@ -4,6 +4,7 @@ from staff.models import Staff
 
 class StaffAdmin(admin.ModelAdmin):
 	list_display = ('name','ng_list',)
+	list_filter = ('groupschedule',)
 
 	def ng_list(self,obj):
 		ngs = ""

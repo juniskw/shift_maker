@@ -4,6 +4,7 @@ from guest.models import Guest
 
 class GuestAdmin(admin.ModelAdmin):
 	list_display = ('name','get_schedules',)
+	list_filter = ('groupschedule',)
 
 	def get_schedules(self,obj):
 		schedules = ""

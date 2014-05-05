@@ -14,28 +14,22 @@ def home(req):
 
 @login_required
 def a_month(req,year_num,month_num):
-	from staff.models import StaffSchedule
+	year,month = int(year_num),int(month_num)
+
 	from calendar import Calendar
+	month_cal = Calendar().monthdayscalendar(year,month)
 
-	tmp = 'schedule/a_month.html'
-
-	month_cal = Calendar().monthdayscalendar( int(year_num),int(month_num) )
-
-	cntxt = {
-		'year':year_num,
-		'month':month_num,
-		'month_cal':month_cal,
-	}
-
-	return render( req,tmp,cntxt )
+	return render( req,'schedule/a_month.html',{
+			  'year':year_num,
+			  'month':month_num,
+			  'month_cal':month_cal,
+	}, )
 
 
 @login_required
 def a_month_shift(req,year_num,month_num):
 	from owner.models import GroupSchedule
-	from staff.models import WorkTime,MonthShift,Staff,StaffSchedule,NgShift
-	from guest.models import Guest,GuestSchedule
-	from calendar import Calendar
+	from schedule.models import WorkTime,MonthShift,StaffSchedule,NgShift,GuestSchedule
 	from datetime import date
 
 	year,month = int(year_num),int(month_num)
@@ -48,12 +42,12 @@ def a_month_shift(req,year_num,month_num):
 	if req.method == 'POST':
 		posted = req.POST
 
-		s_date = date(posted['date'])
-		#s_date = date( year=year,month=month,day=int(posted['day']) )
+		s_date = date( year=year,month=month,day=int(posted['day']) )
 
 		try:
 			s_schedule = StaffSchedule.objects.get( date=s_date,staff=int(posted['staff']) )
 		except StaffSchedule.DoesNotExist:
+			from staff.models import Staff
 			s_schedule = StaffSchedule(date=s_date)
 			s_schedule.staff = Staff.objects.get( id=int(posted['staff']) )
 
@@ -79,19 +73,12 @@ def a_month_shift(req,year_num,month_num):
 
 	staffschedules = get_month_schedules(StaffSchedule,month_cal)
 
-	tmp = 'schedule/a_month_shift.html'
-
-	contxt = {
+	return render(req,'schedule/a_month_shift.html',{
 		'url_plus':'shift/',
-
 		'year':year_num,
 		'month':month_num,
-
 		'month_cal':month_cal,
 		'weekdays':['月','火','水','木','金','土','日',],
-
 		'staffs':groupschedule.staff_set.order_by('id'),
 		'worktimes':groupschedule.worktime_set.order_by('id'),
-	}
-
-	return render(req,tmp,contxt)
+	})
