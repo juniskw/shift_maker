@@ -8,6 +8,7 @@ from guest.models import Guest
 #### base classes ####
 
 class Date(models.Model):
+	monthshift = models.ForeignKey('MonthShift')
 
 	date = models.DateField()
 
@@ -57,7 +58,7 @@ class WorkTime(TimeTable):
 	def save(self,*args,**kwargs):
 		from datetime import time
 		if self.start >= self.end:
-			WorkTime.objects.create(title=self.title+'2',simbol='-',start=time(0,0),end=self.end)
+			WorkTime.objects.create(groupschedule=self.groupschedule,title=self.title+'2',simbol='-',start=time(0,0),end=self.end)
 
 			self.end = time(23,59)
 		super(WorkTime,self).save(*args,**kwargs)

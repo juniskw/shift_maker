@@ -19,9 +19,9 @@
 		<th class="day_{{ cal.day }}">{{ cal.day }}</th>
 	{% endfor %}
 
-	<!--{#% for worktime in worktimes %}
+	{% for worktime in worktimes %}
 		<th rowspan="2">{{ worktime.title }}</th>
-	{% endfor %#}-->
+	{% endfor %}
 	</tr>
 
 	<tr class="info">	<!--曜日-->
@@ -42,11 +42,15 @@
 		</td>
 		{% endfor %}
 
-		<!--{#% for worktime in worktimes %}
-		<td>-->
-			<!--monthscheduleで絞る？-->
-		<!--</td>
-		{% endfor %#}-->
+		{% for worktime in worktimes %}
+		<td>
+			{% with staff.staffschedule_set|worktime_filter:worktime as worktime_set %}
+				{% with worktime_set|monthshift_filter:monthshift as month_worktime_set %}
+					{{ month_worktime_set.count }}
+				{% endwith %}
+			{% endwith %}
+		</td>
+		{% endfor %}
 	</tr>
 
 	<!--tr-->	<!--日直とか-->

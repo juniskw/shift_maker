@@ -9,6 +9,10 @@ def index_is(val,arg):
 
 #### filters ####
 @register.filter
+def monthshift_filter(val,arg):
+	return val.filter(monthshift=arg)
+
+@register.filter
 def date_filter(val,arg):
 	return val.filter(date=arg)
 

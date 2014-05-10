@@ -56,6 +56,7 @@ def new_owner(req):
 				from django.contrib.auth.models import User
 				try:
 					owner = User.objects.create_user(username=name,password=password)
+					return redirect('/')
 				except IntegrityError:
 					error_msg = "You can not use this name!"
 
@@ -83,6 +84,8 @@ def edit_groupschedule(req):
 		groupschedule.group = group
 		groupschedule.start_point = int(posted['start_point'])
 		groupschedule.save()
+
+		return redirect('/')
 
 		#try:
 			#groupschedule = GroupSchedule.objects.get(owner=req.user)

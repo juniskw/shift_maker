@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 
 
 def new_staff(req):
@@ -9,37 +9,14 @@ def new_staff(req):
 
 		staff = Staff()
 
+		staff.groupschedule = req.user.groupschedule
 		staff.name = posted['name']
 
 		staff.save()
 
+		return redirect('/')
+
 	temp = 'staff/new_staff.html'
-	contxt = {}
-
-	return render(req,temp,contxt)
-
-
-def new_worktime(req):
-	from staff.models import WorkTime
-	from datetime import time
-
-	if req.method == 'POST':
-		posted = req.POST
-
-		worktime = WorkTime()
-
-		def get_time(pstd,hour,minute):
-			hour,minute = pstd[hour],pstd[minute]
-			return time( int(hour),int(minute) )
-
-		worktime.title = posted['title']
-		worktime.simbol = posted['simbol']
-		worktime.start = get_time(posted,'start_h','start_m')
-		worktime.end = get_time(posted,'end_h','end_m')
-
-		worktime.save()
-
-	temp = 'staff/new_worktime.html'
 	contxt = {}
 
 	return render(req,temp,contxt)

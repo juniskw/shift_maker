@@ -18,13 +18,13 @@ urlpatterns += patterns('owner.views',
 )
 
 urlpatterns += patterns('schedule.views',
-    url(r'^$', 'home', name="Please wait..."),
+   url(r'^$', 'home', name="Please wait..."),
 
-	 url(r'^%s/$' % (month_url,),'a_month',name="Month"),
-	 url(r'^%s/shift/$' % (month_url,),'a_month_shift',name="MonthShift"),
+	url(r'^%s/$' % (month_url,),'a_month',name="Month"),
+	url(r'^%s/shift/$' % (month_url,),'a_month_shift',name="MonthShift"),
+	url(r'^worktime/new/$','new_worktime',name="NewWorkTime"),
 )
 
 urlpatterns += patterns('staff.views',
-	 url(r'^staff/new/$','new_staff',name="NewStaff"),
-	 url(r'^worktime/new/$','new_worktime',name="NewWorkTime"),
+	url(r'^staff/new/$','new_staff',name="NewStaff"),
 )
