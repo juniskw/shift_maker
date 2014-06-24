@@ -23,6 +23,7 @@ urlpatterns += patterns('schedule.views',
 	url(r'^%s/$' % (month_url,),'a_month',name="Month"),
 	url(r'^%s/shift/$' % (month_url,),'a_month_shift',name="MonthShift"),
 	url(r'^worktime/new/$','new_worktime',name="NewWorkTime"),
+	url(r'^%s/shift/edit/$' % (month_url,),'edit_shift'),
 )
 
 urlpatterns += patterns('staff.views',

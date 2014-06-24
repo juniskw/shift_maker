@@ -8,30 +8,15 @@
 	{% endwith %}
 
 	</a>
-	<ul class="dropdown-menu" id="s{{ staff.id }}d{{ cal.day }}_mn">{# dayだとまずい #}
-	<!--RadioChoice-->
-		<form action="" method="post" class="t_form" id="s{{ staff.id }}d{{ cal }}_fm">
-		{% csrf_token %}
-			<input type="hidden" name="year" value="{{ cal.year }}">
-			<input type="hidden" name="month" value="{{ cal.month }}">
-			<input type="hidden" name="day" value="{{ cal.day }}">
-			<input type="hidden" name="staff" value="{{ staff.id }}">
-
-			{% for worktime in worktimes %}
-			<li>
-				<div class="form-group">
-					<div class="radio"><label>
-						<input type="radio" name="shift" value="{{ worktime.id }}" class="rd" staff_id="{{ staff.id }}" day="{{ cal.day }}">{{ worktime.simbol }}.{{ worktime }}
-					</label></div>
-				</div>
-			</li>
-			{% endfor %}
-			{% if worktimes %}
-			<li><div class="form-group">
-				<input type="reset">
-			</div></li>
-			{% endif %}
-			<li><a href="/worktime/new">Add new WorkTime</a></li>
-		</form>
+	<ul class="dropdown-menu">
+	{% for worktime in worktimes %}
+		<li role="presentation" class="worktime_choices" staff_id="{{ staff.id }}" worktime_id="{{ worktime.id }}"  year="{{ cal.year }}" month="{{ cal.month }}" day="{{ cal.day }}">
+			<a role="menuitem" tabindex="-1">{{ worktime.simbol }}:{{ worktime }}</a>
+		</li>
+	{% endfor %}
+		<li class="divider"></li>
+		<li class="worktime_choices" tabindex="-1" staff_id="{{ staff.id }}" worktime_id="" year="{{ cal.year }}" month="cal.month" day="{{ cal.day }}">
+			<a>Reset</a>
+		</li>
 	</ul>
 </div>

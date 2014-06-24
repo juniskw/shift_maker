@@ -7,6 +7,7 @@
 {% block t_class %}table-condensed table-hover table-responsive{% endblock %}
 
 {% block t_main %}
+<script type="text/javascript" src="https://raw.githubusercontent.com/juniskw/django_tools/master/csrf_token_ajax.js"></script>
 <script type="text/javascript" src="{{ STATIC_URL }}js/a_month_shift.js"></script>
 <link type="text/css" rel="stylesheet" href="{{ STATIC_URL }}css/a_month_shift.css">
 				
@@ -37,7 +38,7 @@
 	<tr align="center">
 		<th class="info" staff_id="{{ staff.id }}">{{ staff }}</th>	<!--rowspan="2"-->
 		{% for cal in month_cal %}
-		<td class="day_{{ cal.day }}" id="s{{ staff.id }}d{{ cal.day }}">
+		<td class="toggle_switch day_{{ cal.day }}" id="s{{ staff.id }}d{{ cal.day }}">
 			{% include 'schedule/parts/dropdown.html' %}
 		</td>
 		{% endfor %}
