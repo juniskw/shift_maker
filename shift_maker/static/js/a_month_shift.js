@@ -1,18 +1,34 @@
 $(document).ready(function(e){
 
 	//// 縦ラインを可視化  ////
-	function setVirtical(day_num){
-		var day_class = '.day_' + day_num;
 
-		$(day_class).hover(function(){
-			$(day_class).addClass('active');
-		},function(){
-			$(day_class).removeClass('active');		  
+	function getDayShift(stf_shft,indx_nm){
+		var day_shifts = [];
+
+		$.each(stf_shft,function(){
+			var day_shift = $(this).children()[indx_nm];
+			day_shifts.push(day_shift);
 		});
+		return day_shifts;
 	}
 
-	var d_count = $('tbody>tr:first>td').length;	//テーブルの一列目tdの総数
+	var shifts = $('tr');
 
+	$('.table_in').hover(function(){
+		var index_num = $(this).index();
+
+		$.each(getDayShift(shifts,index_num),function(){
+			$(this).addClass('active'); 
+		});
+	},function(){
+		var index_num = $(this).index();
+		
+		$.each(getDayShift(shifts,index_num),function(){
+			$(this).removeClass('active');		  
+		})		  
+	});
+
+	
 	//// ドロップダウン ////
 
 	$('.toggle_switch').hover(function(){
@@ -43,11 +59,11 @@ $(document).ready(function(e){
 		});		  
 	});
 
-	var s_count = $('tbody>tr>th').length;
+	/*var s_count = $('tbody>tr>th').length;
 
-	/* 定義した内容をセット */
+	// 定義した内容をセット
 	for(var i=1;i<=d_count;i++){
 		var d_num = i.toString();
 		setVirtical(d_num);
-	}
+	}*/
 });
