@@ -16,7 +16,7 @@
 	<tr align="center" class="info">	<!--日付-->
 		<th></th>
 	{% for cal in month_cal %}
-		<th class="day_{{ cal.day }} table_in">{{ cal.day }}</th>
+		<th class=" table_in">{{ cal.day }}</th>
 	{% endfor %}
 
 	{% for worktime in worktimes %}
@@ -28,7 +28,7 @@
 		<th></th>
 	{% for cal in month_cal %}
 
-		<th class="table_in day_{{ cal.day }}">{{ weekdays|index_is:cal.weekday }}</th>
+		<th class="table_in">{{ weekdays|index_is:cal.weekday }}</th>
 
 	{% endfor %}
 	</tr>
@@ -36,15 +36,15 @@
 <tbody>
 	{% for staff in staffs %}
 	<tr align="center">
-		<th class="info table_in" staff_id="{{ staff.id }}">{{ staff }}</th>	<!--rowspan="2"-->
+		<th class="info table_in" staff_id="{{ staff.id }}">{{ staff }}</th>
 		{% for cal in month_cal %}
-		<td class="toggle_switch table_in day_{{ cal.day }}" id="s{{ staff.id }}d{{ cal.day }}">
+		<td class="toggle_switch table_in">
 			{% include 'schedule/parts/dropdown.html' %}
 		</td>
 		{% endfor %}
 
 		{% for worktime in worktimes %}
-		<td class="table_in">
+		<td class="table_in" worktime_id="{{ worktime.id }}" staff_id="{{ staff.id }}">
 			{% with staff.staffschedule_set|worktime_filter:worktime as worktime_set %}
 				{% with worktime_set|monthshift_filter:monthshift as month_worktime_set %}
 					{{ month_worktime_set.count }}
@@ -53,12 +53,6 @@
 		</td>
 		{% endfor %}
 	</tr>
-
-	<!--tr-->	<!--日直とか-->
-		<!--{#% for cal in month_cal %}
-		<td></td>
-		{% endfor %#}-->
-	<!--/tr-->
 
 	{% endfor %}
 </tbody>

@@ -10,8 +10,8 @@
 	</a>
 	<ul class="dropdown-menu">
 	{% for worktime in worktimes %}
-		<li role="presentation" class="worktime_choices" staff_id="{{ staff.id }}" worktime_id="{{ worktime.id }}"  year="{{ cal.year }}" month="{{ cal.month }}" day="{{ cal.day }}">
-			<a role="menuitem" tabindex="-1">{{ worktime.simbol }}:{{ worktime }}</a>
+		<li class="worktime_choices" staff_id="{{ staff.id }}" worktime_id="{{ worktime.id }}"  year="{{ cal.year }}" month="{{ cal.month }}" day="{{ cal.day }}">
+			<a tabindex="-1">{{ worktime.simbol }}:{{ worktime }}</a>
 		</li>
 	{% endfor %}
 		<li class="divider"></li>
